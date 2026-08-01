@@ -112,12 +112,12 @@ The project is being developed with an emphasis on:
 - [x] Package structure
 - [x] Initial documentation
 - [x] Domain model implementation
-- [ ] Booking engine implementation
-- [ ] Flight search functionality
+- [x] Booking engine implementation
+- [x] Flight search functionality
 - [x] Seat map generation
-- [ ] Seat reservation system
-- [ ] Booking cancellation
-- [ ] Booking lookup
+- [x] Seat reservation system
+- [x] Booking cancellation
+- [x] Booking lookup
 - [ ] Console interface
 - [ ] Testing and refinement
 - [ ] Data persistence
