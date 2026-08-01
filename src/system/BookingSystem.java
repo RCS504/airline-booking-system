@@ -8,6 +8,7 @@ import java.util.Random;
 import model.Flight;
 import model.Booking;
 import model.Seat;
+import model.enums.BookingStatus;
 import model.enums.SeatStatus;
 import model.Passenger;
 
@@ -54,5 +55,30 @@ public class BookingSystem {
         Booking booking = new Booking(ref, passenger, flight, seat);
         bookings.put(ref, booking);
         return booking;
+    }
+
+    public Booking getBooking(String reference) {
+        return bookings.get(reference);
+    }
+
+    public boolean cancelBooking(String reference) {
+        if (bookings.containsKey(reference)) {
+            Booking b = bookings.get(reference);
+            b.setBookingStatus(BookingStatus.CANCELLED);
+            b.getSeat().setSeatStatus(SeatStatus.AVAILABLE);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<Booking> getBookingsForFlight(Flight flight) {
+        List<Booking> results = new ArrayList<>();
+        for (Booking b : bookings.values()) {
+            if (b.getFlight() == flight) {
+                results.add(b);
+            }
+        }
+        return results;
     }
 }
