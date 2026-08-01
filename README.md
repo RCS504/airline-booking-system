@@ -111,7 +111,7 @@ The project is being developed with an emphasis on:
 - [x] Repository setup
 - [x] Package structure
 - [x] Initial documentation
-- [ ] Domain model implementation
+- [x] Domain model implementation
 - [ ] Booking engine implementation
 - [ ] Flight search functionality
 - [ ] Seat map generation
