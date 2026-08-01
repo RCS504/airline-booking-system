@@ -114,7 +114,7 @@ The project is being developed with an emphasis on:
 - [x] Domain model implementation
 - [ ] Booking engine implementation
 - [ ] Flight search functionality
-- [ ] Seat map generation
+- [x] Seat map generation
 - [ ] Seat reservation system
 - [ ] Booking cancellation
 - [ ] Booking lookup
