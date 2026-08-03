@@ -5,6 +5,7 @@ import model.Aircraft;
 import model.Airport;
 import model.Flight;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Search Flights");
+                    searchFlight(bookingSystem, input);
                     break;
                 case 3:
                     System.out.println("View Seat Map");
@@ -53,10 +55,27 @@ public class Main {
                 default:
                     break;
             }
-
         }
-
         input.close();
+    }
+
+    private static void searchFlight(BookingSystem bookingSystem, Scanner input) {
+
+        System.out.print("Please enter the country code of the airport you want to fly from:");
+        String origin = input.next();
+        System.out.print("Please enter the country code of the airport you want to fly to:");
+        String destination = input.next();
+        System.out.print("Please enter the date you want to travel YYYY-MM-DD:");
+        String dateString = input.next();
+        LocalDate date = LocalDate.parse(dateString);
+        List<Flight> results = bookingSystem.searchFlights(origin, destination, date);
+        if (!results.isEmpty()) {
+            for (int i = 0; i < results.size(); i++) {
+                System.out.println(results.get(i));
+            }
+        } else {
+            System.out.println("No results found!");
+        }
     }
 
     private static void viewRoutes(BookingSystem bookingSystem) {
