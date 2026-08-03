@@ -4,6 +4,7 @@ import system.BookingSystem;
 import model.Aircraft;
 import model.Airport;
 import model.Flight;
+import model.Seat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,6 +34,7 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("View Seat Map");
+                    seatMap(bookingSystem, input);
                     break;
                 case 4:
                     System.out.println("Book Seat");
@@ -59,8 +61,21 @@ public class Main {
         input.close();
     }
 
-    private static void searchFlight(BookingSystem bookingSystem, Scanner input) {
+    private static void seatMap(BookingSystem bookingSystem, Scanner input) {
+        System.out.print("Please enter a flight number: ");
+        String number = input.next();
+        Flight flight = bookingSystem.getFlightByNumber(number);
+        if (flight != null) {
+            List<Seat> seatMap = bookingSystem.viewSeatMap(flight);
+            for (int i = 0; i < seatMap.size(); i++) {
+                System.out.println(seatMap.get(i));
+            }
+        } else {
+            System.out.println("Flight not found!");
+        }
+    }
 
+    private static void searchFlight(BookingSystem bookingSystem, Scanner input) {
         System.out.print("Please enter the country code of the airport you want to fly from:");
         String origin = input.next();
         System.out.print("Please enter the country code of the airport you want to fly to:");

@@ -31,8 +31,19 @@ public class BookingSystem {
         }
         return results;
     }
-    public List<Flight> getFlights(){
+
+    public List<Flight> getFlights() {
         return flights;
+    }
+
+    public Flight getFlightByNumber(String number) {
+        for (int i = 0; i < flights.size(); i++) {
+            String flightNumber = flights.get(i).getFlightNumber();
+            if (flightNumber.equals(number)) {
+                return flights.get(i);
+            }
+        }
+        return null;
     }
 
     public List<Seat> viewSeatMap(Flight flight) {
