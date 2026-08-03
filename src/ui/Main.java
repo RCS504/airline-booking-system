@@ -3,8 +3,11 @@ package ui;
 import system.BookingSystem;
 import model.Aircraft;
 import model.Airport;
+import model.Booking;
 import model.Flight;
+import model.Passenger;
 import model.Seat;
+import model.enums.SeatStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,6 +41,7 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Book Seat");
+                    bookSeat(bookingSystem, input);
                     break;
                 case 5:
                     System.out.println("Cancel Booking");
@@ -59,6 +63,43 @@ public class Main {
             }
         }
         input.close();
+    }
+
+    private static void bookSeat(BookingSystem bookingSystem, Scanner input) {
+        System.out.print("Please enter a flight number: ");
+        String number = input.next();
+        Flight flight = bookingSystem.getFlightByNumber(number);
+        if (flight == null) {
+            System.out.println("Flight not found!");
+            return;
+        }
+        System.out.print("Please enter the Seat number: ");
+        String seatNumber = input.next();
+        List<Seat> getAvailabeSeat = flight.getAvailableSeats();
+        for (int i = 0; i < getAvailabeSeat.size(); i++) {
+            if (seatNumber.equals(getAvailabeSeat.get(i).getSeatNumber())) {
+                System.out.print("Please enter your name: ");
+                String name = input.next();
+                System.out.print("Please enter your idNumber: ");
+                String idNumber = input.next();
+                System.out.print("Please enter your contact details: ");
+                String contact = input.next();
+                Passenger passenger = new Passenger(name, idNumber, contact);
+                Booking b = bookingSystem.bookSeat(flight, getAvailabeSeat.get(i), passenger);
+                if (b != null) {
+                    System.out.println(b);
+                    System.out.println("Seat Booked!");
+                    return;
+                }
+            }
+        }
+        for (int i = 0; i < flight.getSeat().size(); i++) {
+            if (seatNumber.equals(flight.getSeat().get(i).getSeatNumber())) {
+                System.out.println("Seat is already Booked!");
+                return;
+            }
+        }
+        System.out.println("Seat does'nt exist!");
     }
 
     private static void seatMap(BookingSystem bookingSystem, Scanner input) {
