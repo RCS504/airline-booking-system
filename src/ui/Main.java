@@ -5,14 +5,74 @@ import model.Aircraft;
 import model.Airport;
 import model.Flight;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         BookingSystem bookingSystem = new BookingSystem();
         seedData(bookingSystem);
-        System.out.println(bookingSystem.searchFlights("LHR", "JFK", LocalDate.of(2026, 3, 20)));
+        Scanner input = new Scanner(System.in);
+
+        int choice = 0;
+        while (choice != 9) {
+            System.out.printf(
+                    "1.View Routes\n2.Search Flights\n3.View Seat Map\n4.Book Seat\n5.Cancel Booking\n6.Lookup Booking\n7.View All Bookings\n8.Add Flight\n9.Exit\nPlease choose an option from 1-9:");
+            choice = input.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("View Routes");
+                    viewRoutes(bookingSystem);
+                    break;
+                case 2:
+                    System.out.println("Search Flights");
+                    break;
+                case 3:
+                    System.out.println("View Seat Map");
+                    break;
+                case 4:
+                    System.out.println("Book Seat");
+                    break;
+                case 5:
+                    System.out.println("Cancel Booking");
+                    break;
+                case 6:
+                    System.out.println("Lookup Booking");
+                    break;
+                case 7:
+                    System.out.println("View All Bookings");
+                    break;
+                case 8:
+                    System.out.println("Add Flight");
+                    break;
+                case 9:
+                    System.out.println("Exit");
+                    return;
+                default:
+                    break;
+            }
+
+        }
+
+        input.close();
+    }
+
+    private static void viewRoutes(BookingSystem bookingSystem) {
+        List<String> routes = new ArrayList<>();
+        String route = null;
+        for (int i = 0; i < bookingSystem.getFlights().size(); i++) {
+            if (!routes.contains(bookingSystem.getFlights().get(i).getOrigin().getCode() + " ---> "
+                    + bookingSystem.getFlights().get(i).getDestination().getCode())) {
+                route = bookingSystem.getFlights().get(i).getOrigin().getCode() + " ---> "
+                        + bookingSystem.getFlights().get(i).getDestination().getCode();
+                routes.add(route);
+            }
+        }
+        for (int i = 0; i < routes.size(); i++) {
+            System.out.println(routes.get(i));
+        }
     }
 
     private static void seedData(BookingSystem bookingSystem) {

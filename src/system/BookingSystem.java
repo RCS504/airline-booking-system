@@ -31,6 +31,9 @@ public class BookingSystem {
         }
         return results;
     }
+    public List<Flight> getFlights(){
+        return flights;
+    }
 
     public List<Seat> viewSeatMap(Flight flight) {
         return flight.getSeat();
