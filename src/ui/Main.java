@@ -48,6 +48,7 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("Lookup Booking");
+                    lookupBooking(bookingSystem, input);
                     break;
                 case 7:
                     System.out.println("View All Bookings");
@@ -63,6 +64,17 @@ public class Main {
             }
         }
         input.close();
+    }
+
+    private static void lookupBooking(BookingSystem bookingSystem, Scanner input) {
+        System.out.print("Please enter your booking reference: ");
+        String bookingReference = input.next();
+        Booking b = bookingSystem.getBooking(bookingReference);
+        if (b == null) {
+            System.out.println("Booking not found!");
+        } else {
+            System.out.println(b);
+        }
     }
 
     private static void cancelBooking(BookingSystem bookingSystem, Scanner input) {
