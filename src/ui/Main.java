@@ -182,9 +182,9 @@ public class Main {
     }
 
     private static void searchFlight(BookingSystem bookingSystem, Scanner input) {
-        System.out.print("Please enter the country code of the airport you want to fly from:");
+        System.out.print("Please enter the airport code of the airport you want to fly from:");
         String origin = input.next();
-        System.out.print("Please enter the country code of the airport you want to fly to:");
+        System.out.print("Please enter the airport code of the airport you want to fly to:");
         String destination = input.next();
         System.out.print("Please enter the date you want to travel YYYY-MM-DD:");
         String dateString = input.next();
