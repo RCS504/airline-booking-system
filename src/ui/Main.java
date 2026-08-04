@@ -52,6 +52,7 @@ public class Main {
                     break;
                 case 7:
                     System.out.println("View All Bookings");
+                    viewAllbookings(bookingSystem, input);
                     break;
                 case 8:
                     System.out.println("Add Flight");
@@ -64,6 +65,24 @@ public class Main {
             }
         }
         input.close();
+    }
+
+    private static void viewAllbookings(BookingSystem bookingSystem, Scanner input) {
+        System.out.print("Please enter a flight number: ");
+        String flightNumber = input.next();
+        Flight f = bookingSystem.getFlightByNumber(flightNumber);
+        if (f == null) {
+            System.out.println("Flight does not exist!");
+        } else {
+            List<Booking> b = bookingSystem.getBookingsForFlight(f);
+            if (b.size() == 0) {
+                System.out.println("No bookings exist!");
+            } else {
+                for (int i = 0; i < b.size(); i++) {
+                    System.out.println(b.get(i));
+                }
+            }
+        }
     }
 
     private static void lookupBooking(BookingSystem bookingSystem, Scanner input) {
