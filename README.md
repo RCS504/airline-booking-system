@@ -1,41 +1,39 @@
 # Airline Booking System
 
-A console-based airline booking system being developed in Java as a personal portfolio project to strengthen software engineering fundamentals through independent design, implementation, and debugging.
+A console-based airline booking system built in Java as a personal portfolio project to strengthen software engineering fundamentals through independent design, implementation, and debugging.
 
-The project aims to model a simplified airline booking environment where users can search for flights, view seat availability, reserve seats, cancel bookings, and manage bookings through a structured booking engine.
+The system models a simplified airline booking environment: users can search for flights, view seat availability, reserve seats, cancel bookings, look up and manage bookings, and (as an administrator) add new flights — all through a structured booking engine.
 
 ---
 
 ## Development Philosophy
 
-This project is being developed as a learning exercise with the goal of strengthening software engineering and problem-solving skills.
+This project was built as a learning exercise with the goal of strengthening software engineering and problem-solving skills.
 
-The focus is on independently designing, implementing, testing, and debugging each feature. External resources, including documentation and AI tools, are used for learning, clarification, and debugging guidance rather than generating the project's implementation.
+The focus was on independently designing, implementing, testing, and debugging each feature. External resources, including documentation and AI tools, were used for learning, clarification, and debugging guidance rather than generating the project's implementation.
 
-The objective is to develop a deeper understanding of Java, object-oriented programming, software architecture, and the problem-solving process involved in building complete applications.
+The objective was to develop a deeper understanding of Java, object-oriented programming, software architecture, and the problem-solving process involved in building complete applications.
 
 ---
 
-## Planned Features
+## Features
 
-The completed system is intended to support:
+The system supports:
 
-- Airport and flight management
-- Aircraft seat generation
-- Flight searching
-- Seat availability viewing
-- Passenger bookings
-- Seat reservations
-- Booking cancellation
+- Viewing available routes
+- Flight searching by origin, destination, and date
+- Seat availability viewing (full seat map per flight)
+- Passenger bookings with a generated unique booking reference
+- Seat reservations, guarded against double-booking
+- Booking cancellation, guarded against cancelling an already-cancelled booking
 - Booking lookup using unique booking references
-- Console-based user interaction
-- Administrative flight and booking management
+- Admin: viewing all bookings for a given flight
+- Admin: adding new flights from existing seeded airports and aircraft
+- Console-based user interaction, with input validation throughout — malformed numbers, dates, and menu choices are caught and re-prompted rather than crashing the program
 
 ---
 
 ## Project Structure
-
-The planned structure is:
 
 ```text
 src/
@@ -48,16 +46,19 @@ src/
 │   ├── FrequentFlyerPassenger.java
 │   ├── Booking.java
 │   └── enums/
+│       ├── SeatClass.java
+│       ├── SeatStatus.java
+│       ├── BookingStatus.java
+│       └── LoyaltyTier.java
 │
 ├── system/
 │   └── BookingSystem.java
 │
 └── ui/
-    ├── ConsoleMenu.java
     └── Main.java
 ```
 
-The final structure may change slightly as development progresses.
+Menu handling ended up living directly in `Main.java` rather than a separate `ConsoleMenu` class — the menu loop and its handler methods were small enough that splitting them out didn't add clarity.
 
 ---
 
@@ -93,7 +94,7 @@ This structure allows the booking engine to remain independent from the user int
 
 ## Design Principles
 
-The project is being developed with an emphasis on:
+The project was built with an emphasis on:
 
 - Object-oriented design
 - Separation of concerns
@@ -118,29 +119,29 @@ The project is being developed with an emphasis on:
 - [x] Seat reservation system
 - [x] Booking cancellation
 - [x] Booking lookup
-- [ ] Console interface
-- [ ] Testing and refinement
-- [ ] Data persistence
+- [x] Admin: view all bookings for a flight
+- [x] Admin: add flight
+- [x] Console interface
+- [x] Input validation / robustness pass
+- [ ] Data persistence (out of scope for v1 — see below)
 
 ---
 
-## Future Improvements
+## Out of Scope (v1)
 
-Possible future enhancements include:
+Deliberately left out to keep the focus on core logic rather than breadth of features:
 
-- Persistent storage
-- Dynamic ticket pricing
-- Passenger database
-- Frequent flyer rewards
-- Waitlist functionality
-- Additional administrative tools
-- Improved search and filtering
-- Alternative user interfaces
+- **Waitlist / priority-queue behaviour** — the `FrequentFlyerPassenger`/`LoyaltyTier` model exists, but isn't wired into any priority logic yet
+- **Persistent storage** — state is in-memory only for the current run
+- **A Console-class (colour/graphics) visual reskin**
+- **Any client-server split**
+
+## AI Usage
+
+AI (Claude) was used throughout as a debugging aid — pointing at the location and shape of bugs (e.g. Scanner buffer/newline issues, variable scope, missing null/empty-list guards) without providing fixes or code directly — and to help update this README. All implementation was designed, written, and debugged independently.
 
 ---
 
 ## Status
 
-This project is currently in the planning and early development stage.
-
-Features will be implemented incrementally, with progress tracked through regular commits as new functionality is completed and tested.
+**v1 complete.** All core functionality — flight search, seat maps, booking, cancellation, lookup, and admin management — is implemented, tested, and validated against malformed input.
