@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import model.Flight;
+import model.Aircraft;
+import model.Airport;
 import model.Booking;
 import model.Seat;
 import model.enums.BookingStatus;
@@ -15,6 +17,34 @@ import model.Passenger;
 public class BookingSystem {
     private List<Flight> flights = new ArrayList<>();
     private HashMap<String, Booking> bookings = new HashMap<>();
+    private List<Airport> airports = new ArrayList<>();
+    private List<Aircraft> aircrafts = new ArrayList<>();
+
+    public Aircraft getAircraftByModel(String aircraftModel) {
+        for (int i = 0; i < aircrafts.size(); i++) {
+            if (aircrafts.get(i).getModel().equals(aircraftModel)) {
+                return aircrafts.get(i);
+            }
+        }
+        return null;
+    }
+
+    public void addAircraft(Aircraft aircraft) {
+        aircrafts.add(aircraft);
+    }
+
+    public Airport getAirportByCode(String airportCode) {
+        for (int i = 0; i < airports.size(); i++) {
+            if (airports.get(i).getCode().equals(airportCode)) {
+                return airports.get(i);
+            }
+        }
+        return null;
+    }
+
+    public void addAirport(Airport airport) {
+        airports.add(airport);
+    }
 
     public void addFlight(Flight flight) {
         flights.add(flight);

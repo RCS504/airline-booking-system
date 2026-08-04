@@ -56,6 +56,7 @@ public class Main {
                     break;
                 case 8:
                     System.out.println("Add Flight");
+                    addFlight(bookingSystem, input);
                     break;
                 case 9:
                     System.out.println("Exit");
@@ -65,6 +66,27 @@ public class Main {
             }
         }
         input.close();
+    }
+
+    private static void addFlight(BookingSystem bookingSystem, Scanner input) {
+        System.out.print("Please enter a flight number: ");
+        String flightNumber = input.next();
+        System.out.print("Please enter the airport code of the airport of origin: ");
+        String origin = input.next();
+        Airport o = bookingSystem.getAirportByCode(origin);
+        System.out.print("Please enter the airport code of the airport of destination: ");
+        String destination = input.next();
+        Airport d = bookingSystem.getAirportByCode(destination);
+        System.out.print("Please enter the aircraft that is going to be used for the flight: ");
+        String aircraft = input.next();
+        Aircraft a = bookingSystem.getAircraftByModel(aircraft);
+        System.out.print("Please enter the date and time of the departure(YYYY-MM-DDTHH:MM): ");
+        String departure = input.next();
+        LocalDateTime dateTime = LocalDateTime.parse(departure);
+        System.out.print("Please enter the base price you want to set for the flight: ");
+        Double basePrice = input.nextDouble();
+        Flight flight = new Flight(flightNumber, o, d, a, dateTime, basePrice);
+        bookingSystem.addFlight(flight);
     }
 
     private static void viewAllbookings(BookingSystem bookingSystem, Scanner input) {
@@ -195,13 +217,20 @@ public class Main {
 
     private static void seedData(BookingSystem bookingSystem) {
         Airport lhr = new Airport("LHR", "London Hethrow", "London");
+        bookingSystem.addAirport(lhr);
         Airport jfk = new Airport("JFK", "John F Kennedy", "New York");
+        bookingSystem.addAirport(jfk);
         Airport dxb = new Airport("DXB", "Dubai International", "Dubai");
+        bookingSystem.addAirport(dxb);
         Airport cdg = new Airport("CDG", "Charles de Gaulle", "Paris");
+        bookingSystem.addAirport(cdg);
         Airport sin = new Airport("SIN", "Changi", "Singapore");
+        bookingSystem.addAirport(sin);
 
-        Aircraft boeing = new Aircraft("Boeing 737", 20, 6, 3);
-        Aircraft airbus = new Aircraft("Airbus A380", 30, 8, 5);
+        Aircraft boeing = new Aircraft("Boeing-737", 20, 6, 3);
+        bookingSystem.addAircraft(boeing);
+        Aircraft airbus = new Aircraft("Airbus-A380", 30, 8, 5);
+        bookingSystem.addAircraft(airbus);
 
         Flight ba101 = new Flight("BA101", lhr, jfk, boeing, LocalDateTime.of(2026, 3, 20, 14, 30), 450);
         bookingSystem.addFlight(ba101);
