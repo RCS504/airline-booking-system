@@ -78,9 +78,12 @@ public class BookingSystem {
     public boolean cancelBooking(String reference) {
         if (bookings.containsKey(reference)) {
             Booking b = bookings.get(reference);
-            b.setBookingStatus(BookingStatus.CANCELLED);
-            b.getSeat().setSeatStatus(SeatStatus.AVAILABLE);
-            return true;
+            if (b.getBookingStatus() != BookingStatus.CANCELLED) {
+                b.setBookingStatus(BookingStatus.CANCELLED);
+                b.getSeat().setSeatStatus(SeatStatus.AVAILABLE);
+                return true;
+            }
+            return false;
         } else {
             return false;
         }

@@ -7,7 +7,6 @@ import model.Booking;
 import model.Flight;
 import model.Passenger;
 import model.Seat;
-import model.enums.SeatStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,6 +44,7 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("Cancel Booking");
+                    cancelBooking(bookingSystem, input);
                     break;
                 case 6:
                     System.out.println("Lookup Booking");
@@ -65,6 +65,18 @@ public class Main {
         input.close();
     }
 
+    private static void cancelBooking(BookingSystem bookingSystem, Scanner input) {
+        System.out.print("Please enter your booking reference: ");
+        String bookingReference = input.next();
+        Booking b = bookingSystem.getBooking(bookingReference);
+        if (b == null) {
+            System.out.println("Booking not found!");
+        } else {
+            bookingSystem.cancelBooking(bookingReference);
+            System.out.println("Booking cancelled!");
+        }
+    }
+
     private static void bookSeat(BookingSystem bookingSystem, Scanner input) {
         System.out.print("Please enter a flight number: ");
         String number = input.next();
@@ -78,7 +90,7 @@ public class Main {
         List<Seat> getAvailabeSeat = flight.getAvailableSeats();
         for (int i = 0; i < getAvailabeSeat.size(); i++) {
             if (seatNumber.equals(getAvailabeSeat.get(i).getSeatNumber())) {
-                System.out.print("Please enter your name: ");
+                System.out.print("Please enter your first name: ");
                 String name = input.next();
                 System.out.print("Please enter your idNumber: ");
                 String idNumber = input.next();
