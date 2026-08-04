@@ -24,38 +24,44 @@ public class Main {
         while (choice != 9) {
             System.out.printf(
                     "1.View Routes\n2.Search Flights\n3.View Seat Map\n4.Book Seat\n5.Cancel Booking\n6.Lookup Booking\n7.View All Bookings\n8.Add Flight\n9.Exit\nPlease choose an option from 1-9:");
-            choice = input.nextInt();
+            try {
+                choice = input.nextInt();
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Please enter a number from 1-9!");
+                input.nextLine();
+                continue;
+            }
             switch (choice) {
                 case 1:
-                    System.out.println("View Routes");
+                    System.out.println("=== View Routes ===");
                     viewRoutes(bookingSystem);
                     break;
                 case 2:
-                    System.out.println("Search Flights");
+                    System.out.println("=== Search Flights ===");
                     searchFlight(bookingSystem, input);
                     break;
                 case 3:
-                    System.out.println("View Seat Map");
+                    System.out.println("=== View Seat Map ===");
                     seatMap(bookingSystem, input);
                     break;
                 case 4:
-                    System.out.println("Book Seat");
+                    System.out.println("=== Book Seat ===");
                     bookSeat(bookingSystem, input);
                     break;
                 case 5:
-                    System.out.println("Cancel Booking");
+                    System.out.println("=== Cancel Booking ===");
                     cancelBooking(bookingSystem, input);
                     break;
                 case 6:
-                    System.out.println("Lookup Booking");
+                    System.out.println("=== Lookup Booking ===");
                     lookupBooking(bookingSystem, input);
                     break;
                 case 7:
-                    System.out.println("View All Bookings");
+                    System.out.println("=== View All Bookings ===");
                     viewAllbookings(bookingSystem, input);
                     break;
                 case 8:
-                    System.out.println("Add Flight");
+                    System.out.println("=== Add Flight ===");
                     addFlight(bookingSystem, input);
                     break;
                 case 9:
@@ -82,9 +88,21 @@ public class Main {
         Aircraft a = bookingSystem.getAircraftByModel(aircraft);
         System.out.print("Please enter the date and time of the departure(YYYY-MM-DDTHH:MM): ");
         String departure = input.next();
-        LocalDateTime dateTime = LocalDateTime.parse(departure);
+        LocalDateTime dateTime = null;
+        try {
+            dateTime = LocalDateTime.parse(departure);
+        } catch (java.time.format.DateTimeParseException e) {
+            System.out.println("please enter a proper date in this specific format YYYY-MM-DDTHH:MM!");
+            return;
+        }
         System.out.print("Please enter the base price you want to set for the flight: ");
-        Double basePrice = input.nextDouble();
+        Double basePrice = null;
+        try {
+            basePrice = input.nextDouble();
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("Please enter a proper base price!");
+            return;
+        }
         Flight flight = new Flight(flightNumber, o, d, a, dateTime, basePrice);
         bookingSystem.addFlight(flight);
     }
@@ -188,7 +206,14 @@ public class Main {
         String destination = input.next();
         System.out.print("Please enter the date you want to travel YYYY-MM-DD:");
         String dateString = input.next();
-        LocalDate date = LocalDate.parse(dateString);
+        LocalDate date;
+        try {
+            date = LocalDate.parse(dateString);
+        } catch (java.time.format.DateTimeParseException e) {
+            System.out.println("Please enter a proper date in this specific format YYYY-MM-DD!");
+            return;
+        }
+
         List<Flight> results = bookingSystem.searchFlights(origin, destination, date);
         if (!results.isEmpty()) {
             for (int i = 0; i < results.size(); i++) {
